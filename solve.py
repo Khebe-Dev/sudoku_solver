@@ -6,8 +6,8 @@ def main(filename):
     try:
         filename = sys.argv[1]
         with open(filename, "r") as input:
-            grid = input.read()
-        print(grid)
+            for lines in input:
+                print(lines)
 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found")
