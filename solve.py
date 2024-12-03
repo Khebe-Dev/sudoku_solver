@@ -1,5 +1,20 @@
-# Tell users how to solve
-# Solving puzzle from path/to/puzzle.txt
-# Naked Single: Top right cell can only be a 4
-# Disambiguated Pair: The bottom row needs a 2 and a 6, but only one cell can be a 2. We fill in 6 and 2.
-# (etc, etc)
+# steps
+# readme : rules of the game
+
+# create grid 9x9 with small blocks k
+    # open puzzle 
+    # print to user
+# loop rows, col and boxes for possible play k
+    # print hint to player
+# input from player j
+    # check validity no.
+    # if wrong:
+    # print message and give hint again
+    # if right:
+    # update grid wiht input and print grid back 
+# rep until solved
+# solved print in actual boxes j
+    # maybe for loop -- range(len(bot))
+    # if ... raw % 3 == 0
+    # f-string print "|" + end = " "
+
