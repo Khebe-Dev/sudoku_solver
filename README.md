@@ -8,8 +8,7 @@
     # print to user
 # loop rows, col and boxes for possible play k
     # print hint to player
-# input from player j
-    # check validity no.
+# check validity no.
     # if wrong:
     # print message and give hint again
     # if right:
