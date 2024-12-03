@@ -14,6 +14,7 @@ def main(filename):
     except Exception as e:
         print(f"Error: {e}")
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python3 solve.py path/to/puzzle.txt") #-o path/to/solved_puzzle.txt
