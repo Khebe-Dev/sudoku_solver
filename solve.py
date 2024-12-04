@@ -18,3 +18,23 @@
     # if ... raw % 3 == 0
     # f-string print "|" + end = " "
 
+
+def validity(grid,num,pos):
+    #check row
+    for i in range(len(grid[0])):
+        if grid[pos[0]][i] == num and pos[1] != i:
+            return False
+        
+    #check column
+    for i in range(len(grid)):    
+        if grid[i][pos[1]] == num and pos[0] != i:
+            return False
+    
+    #check box
+    box_x = pos[1] // 3
+    box_y = pos[0] // 3
+    for raw in range(box_y * 3, box_y * 3 + 3):
+        for col in range(box_x * 3, box_x * 3 + 3):
+            if grid[raw][col] == num and (raw,col) != pos:
+                return False
+    return True
