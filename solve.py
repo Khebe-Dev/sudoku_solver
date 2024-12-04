@@ -38,3 +38,14 @@ def validity(grid,num,pos):
             if grid[raw][col] == num and (raw,col) != pos:
                 return False
     return True
+
+def empty_spaces(grid):
+    """ 
+    checking for spaces in the grid that are equal to zero 
+    """
+    for col in range(len(grid)):
+        for raw in range(len(grid[0])):
+            if grid [col][raw] == 0:
+                return col , raw
+        return None         
+	
