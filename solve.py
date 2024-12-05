@@ -7,8 +7,8 @@ def main():
     grid = open_input_file()
     print(f"Unsolved sudoko puzzle: \n{grid}\n")
 
-    # call validity for simple check
-    validity(grid)
+    # call format grid 
+    format_grid(grid)
 
 def open_input_file():
     try:
@@ -24,7 +24,7 @@ def open_input_file():
     except Exception as e:
         print(f"Unexpected error: {e}") 
 
-def validity(grid):
+def format_grid(grid):
     for lines in grid.splitlines():
         # remove empty space, convert to integer of list
         lines = list(map(int, lines.replace(" ", "")))
