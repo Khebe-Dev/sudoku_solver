@@ -91,18 +91,16 @@ def main(input_filename):
 
         if solve(grid):
 
-            
             output_filename = sys.argv[3]
-            with open(output_filename, "w") as output:
-                # output.write("Solved Sudoku Grid:")
-                # while "," in output:
-                #     if "," in output:
-                #         output = output.replace(",","")
-                    
-                output.writelines(str(grid))
+            with open(output_filename, "w") as x:
+                output = [' '.join([str(rows) for rows in item]) for item in grid]
+                for solved_sudoku in output:
+                    # print(solved_sudoku)
+                    x.write(f'{solved_sudoku}\n')
 
             # print("\nSolved Sudoku Grid:")
             # print_grid(grid)
+
         else:
             print("\nThis Sudoku puzzle cannot be solved.")
 
