@@ -1,38 +1,6 @@
 import sys
 # sys.argv = ["solve.py", "path/to/puzzle.txt", "-o", "path/to/solved_puzzle.txt"]
 
-def main(filename):
-
-    try:
-
-        filename = sys.argv[1]
-        with open(filename, "r") as input_file:
-            grid = input_file.read().strip()
-
-        # Remove spaces or other non-numeric characters
-        box_grid = ''.join(filter(str.isdigit, grid))
-
-        
-        if len(box_grid) != 81:
-            print("Error: The input Sudoku grid is not valid")
-
-
-        grid = [[int(box_grid[row * 9 + col]) for col in range(9)] for row in range(9)]
-
-        print("Input Sudoku Grid:")
-        print_grid(grid)
-
-        if solve(grid):
-            print("\nSolved Sudoku Grid:")
-            print_grid(grid)
-        else:
-            print("\nThis Sudoku puzzle cannot be solved.")
-
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found")
-    except Exception as e:
-        print(f"Error: {e}")
-
 def solve(grid):
 
     find = find_empty(grid)
@@ -69,11 +37,12 @@ def validity(grid, num, pos):
         for j in range(box_x * 3, box_x * 3 + 3):
             if grid[i][j] == num and (i, j) != pos:
                 return False
-    # print(f"this is puzzle:  \n{grid}")
+
+        # Naked Single: Top right cell can only be a 4
+    print(f"\nPosition: {pos} can be a {num}")
+
     for line in grid:
         print(line)
-    print(f"position: {pos}")
-    print(f"number puzzle: {num}")
             
     return True
     
@@ -99,8 +68,51 @@ def find_empty(grid):
                 return (row, col)
     return None
 
+def main(input_filename):
+
+    try:
+
+        input_filename = sys.argv[1]
+        with open(input_filename, "r") as input_file:
+            grid = input_file.read().strip()
+
+        # Remove spaces or other non-numeric characters
+        box_grid = ''.join(filter(str.isdigit, grid))
+
+        
+        if len(box_grid) != 81:
+            print("Error: The input Sudoku grid is not valid")
+
+
+        grid = [[int(box_grid[row * 9 + col]) for col in range(9)] for row in range(9)]
+
+        print("Input Sudoku Grid:")
+        print_grid(grid)
+
+        if solve(grid):
+
+            
+            output_filename = sys.argv[3]
+            with open(output_filename, "w") as output:
+                # output.write("Solved Sudoku Grid:")
+                # while "," in output:
+                #     if "," in output:
+                #         output = output.replace(",","")
+                    
+                output.writelines(str(grid))
+
+            # print("\nSolved Sudoku Grid:")
+            # print_grid(grid)
+        else:
+            print("\nThis Sudoku puzzle cannot be solved.")
+
+    except FileNotFoundError:
+        print(f"Error: File '{input_filename}' not found")
+    except Exception as e:
+        print(f"Unexpected Error: {e}")
+
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 solve.py path/to/puzzle.txt")
+    if len(sys.argv) != 4:
+        print("Usage: python3 solve.py path/to/puzzle.txt -o path/to/solved_puzzle.txt") 
     else:
-        main(sys.argv[1])
+        main(sys.argv[3])
