@@ -46,19 +46,19 @@ def validity(grid, num, pos):
             
     return True
     
-def print_grid(grid):
+# def output_format(grid):
 
-    for i in range(len(grid)):
-        if i % 3 == 0 and i != 0:
-            print("--------------------")
+#     for i in range(len(grid)):
+#         if i % 3 == 0 and i != 0:
+#             print("--------------------")
             
-        for j in range(len(grid[0])):
-            if j % 3 == 0 and j != 0:
-                print("|", end="")
-            if j == 8:
-                print(grid[i][j])
-            else:
-                print(str(grid[i][j]) + " ", end="")
+#         for j in range(len(grid[0])):
+#             if j % 3 == 0 and j != 0:
+#                 print("|", end="")
+#             if j == 8:
+#                 print(grid[i][j])
+#             else:
+#                 print(str(grid[i][j]) + " ", end="")
 
 def find_empty(grid):
 
@@ -86,8 +86,8 @@ def main(input_filename):
 
         grid = [[int(box_grid[row * 9 + col]) for col in range(9)] for row in range(9)]
 
-        print("Input Sudoku Grid:")
-        print_grid(grid)
+        # print("Input Sudoku Grid:")
+        # output_format(grid)
 
         if solve(grid):
 
@@ -96,10 +96,10 @@ def main(input_filename):
                 output = [' '.join([str(rows) for rows in item]) for item in grid]
                 for solved_sudoku in output:
                     # print(solved_sudoku)
-                    x.write(f'{solved_sudoku}\n')
+                    x.writelines(f'{solved_sudoku}\n')
 
             # print("\nSolved Sudoku Grid:")
-            # print_grid(grid)
+            # output_format(grid)
 
         else:
             print("\nThis Sudoku puzzle cannot be solved.")
