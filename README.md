@@ -1,25 +1,20 @@
-# sudoku_solver
+ # Sudoko Solver
 
-# steps
-# readme : rules of the game
+A program that can solve the popular number puzzle, Sudoku. It teaches its user to solve it as well. 
 
-# create grid 9x9 with small blocks k
-    # open puzzle 
-    # print to user
-# loop rows, col and boxes for possible play k
-    # print hint to player
-# check validity no.
-    # if wrong:
-    # print message and give hint again
-    # if right:
-    # update grid wiht input and print grid back 
-# rep until solved
-# solved print in actual boxes j
-    # maybe for loop -- range(len(bot))
-    # if ... raw % 3 == 0
-    # f-string print "|" + end = " "
+# The goal 
+is to fill a 9x9 grid with digits so that each column, each row, and each of the nine 3x3 subgrids that compose the grid contain all of the digits from 1 to 9.
 
+# Usage
+Create path/to directory with text files 
+Input file (puzzle.txt):
+This has the unsolved puzzle
+0 represents empty cells
+There are spaces " " in between numbers
 
+Output file (solved_puzzle.txt):
+This is the solved puzzle of puzzle.txt
+To be formatted as the input file
 
 
 ## Getting started
