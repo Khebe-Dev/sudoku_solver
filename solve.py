@@ -1,116 +1,93 @@
 import sys
-# sys.argv = ["solve.py", "path/to/puzzle.txt", "-o", "path/to/solved_puzzle.txt"]
 
-def solve(grid):
+def read_input():
+    try:
+        input_filepath = sys.argv[1]
+        with open(input_filepath, "r") as input_file:
+            grid = input_file.read()
+            return grid
 
-    find = find_empty(grid)
-    if not find:
-        return True
-    else:
-        row, col = find
+    except Exception as e:
+        print(f"Unexpected error: {e}") 
+        
+def format_grid(grid):
+    sudoku_grid = []
+    for lines in grid.splitlines():
+        sudoku_grid.append([int(num) for num in lines.split()])
+    return sudoku_grid
 
-    for i in range(1, 10):
-        if validity(grid, i, (row, col)):
-            grid[row][col] = i
-            if solve(grid):
-                return True
-            grid[row][col] = 0
+def display_grid(grid):
+    for row in grid:
+        print(" ".join(str(num) for num in row))
 
-    return False
-
-def validity(grid, num, pos):
-
-    # Check row
-    for i in range(len(grid[0])):
-        if grid[pos[0]][i] == num and pos[1] != i:
+def is_valid(grid, row, col, num):
+    for i in range(9):
+        if grid[row][i] == num:
+            return False
+    
+    for i in range(9):
+        if grid[i][col] == num:
             return False
 
-    # Check column
-    for i in range(len(grid)):
-        if grid[i][pos[1]] == num and pos[0] != i:
-            return False
-
-    # Check box
-    box_x = pos[1] // 3
-    box_y = pos[0] // 3
-    for i in range(box_y * 3, box_y * 3 + 3):
-        for j in range(box_x * 3, box_x * 3 + 3):
-            if grid[i][j] == num and (i, j) != pos:
+    start_row = (row // 3) * 3
+    start_col = (col // 3) * 3
+    for rows in range(start_row, start_row + 3):
+        for columnns in range(start_col, start_col + 3):
+            if grid[rows][columnns] == num:
                 return False
 
-        # Naked Single: Top right cell can only be a 4
-    print(f"\nPosition: {pos} can be a {num}")
-
-    for line in grid:
-        print(line)
-            
     return True
-    
-# def output_format(grid):
 
-#     for i in range(len(grid)):
-#         if i % 3 == 0 and i != 0:
-#             print("--------------------")
-            
-#         for j in range(len(grid[0])):
-#             if j % 3 == 0 and j != 0:
-#                 print("|", end="")
-#             if j == 8:
-#                 print(grid[i][j])
-#             else:
-#                 print(str(grid[i][j]) + " ", end="")
-
-def find_empty(grid):
-
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
+def solve_sudoku(grid):
+    for row in range(9):
+        for col in range(9):
+            # empty cell find 
             if grid[row][col] == 0:
-                return (row, col)
-    return None
+                # all num try to find valid
+                for num in range(1, 10):
+                    if is_valid(grid, row, col, num):
+                        grid[row][col] = num
 
-def main(input_filename):
+                        print(f"Placing {num} at position ({row + 1}, {col + 1}):")
+                        display_grid(grid)
+                        print("\n")
 
+                        # repeat process ...
+                        if solve_sudoku(grid): 
+                            return True
+                        
+                        # since number combination is not solve_sudoku, erase and restart process (backtrack)
+                        grid[row][col] = 0
+                return False
+    return True
+
+def write_output(grid):
     try:
-
-        input_filename = sys.argv[1]
-        with open(input_filename, "r") as input_file:
-            grid = input_file.read().strip()
-
-        # Remove spaces or other non-numeric characters
-        box_grid = ''.join(filter(str.isdigit, grid))
-
-        
-        if len(box_grid) != 81:
-            print("Error: The input Sudoku grid is not valid")
-
-
-        grid = [[int(box_grid[row * 9 + col]) for col in range(9)] for row in range(9)]
-
-        # print("Input Sudoku Grid:")
-        # output_format(grid)
-
-        if solve(grid):
-
-            output_filename = sys.argv[3]
-            with open(output_filename, "w") as x:
-                output = [' '.join([str(rows) for rows in item]) for item in grid]
-                for solved_sudoku in output:
-                    # print(solved_sudoku)
-                    x.writelines(f'{solved_sudoku}\n')
-
-            # print("\nSolved Sudoku Grid:")
-            # output_format(grid)
-
-        else:
-            print("\nThis Sudoku puzzle cannot be solved.")
-
-    except FileNotFoundError:
-        print(f"Error: File '{input_filename}' not found")
+        output_file = sys.argv[3]
+        with open(output_file, "w") as output:
+            for row in grid:
+                output.write(" ". join(str(num) for num in row) + "\n")
     except Exception as e:
-        print(f"Unexpected Error: {e}")
+        print(f"Unexpected error: {e}")
+
+
+def main():
+    if len(sys.argv) != 4:
+        print("Usage: python3 solve.py path/to/puzzle.txt -o path/to/solved_puzzle.txt")
+   
+    # read input file, format function for code use, display function for user understanding
+    grid = read_input()
+    sudoku_grid = format_grid(grid)
+    print(f"Solving puzzle from path/to/puzzle.txt: \n")
+    display_grid(sudoku_grid)
+
+    # empty cell find, try valid num 
+    if solve_sudoku(sudoku_grid):
+        print("Solved puzzle to path/to/solved_puzzle.txt")
+        write_output(sudoku_grid)
+    else:
+        print("No solution generated")
+
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python3 solve.py path/to/puzzle.txt -o path/to/solved_puzzle.txt") 
-    else:
-        main(sys.argv[3])
+        main()
