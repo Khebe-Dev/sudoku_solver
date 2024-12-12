@@ -86,7 +86,7 @@ def main():
         print("Solved puzzle to path/to/solved_puzzle.txt")
         write_output(sudoku_grid)
     else:
-        print("No solution generated")
+        print("Cannot generate solution for puzzle")
 
 
 if __name__ == "__main__":
