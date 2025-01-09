@@ -1,6 +1,11 @@
 import sys
 
 def read_input():
+    """It reads the inputfile and handle errors  
+
+    Returns:
+        _String_: String of Integers
+    """
     try:
         input_filepath = sys.argv[1]
         with open(input_filepath, "r") as input_file:
@@ -11,6 +16,14 @@ def read_input():
         print(f"Unexpected error: {e}") 
         
 def format_grid(grid):
+    """It create a nested lists of integers 
+    
+    Args:
+        grid (_string _): String of Integers
+
+    Returns:
+        _list_: Nested lists of Integers 
+    """
     sudoku_grid = []
     for lines in grid.splitlines():
         sudoku_grid.append([int(num) for num in lines.split()])
