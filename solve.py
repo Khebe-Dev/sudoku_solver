@@ -30,10 +30,16 @@ def format_grid(grid):
     return sudoku_grid
 
 def display_grid(grid):
+    """_Checking if numbers in a grid on the rows and colons if they are correct.
+
+    Args:
+        grid (_Integer): grid of integers
+    """
     for row in grid:
         print(" ".join(str(num) for num in row))
 
 def is_valid(grid, row, col, num):
+    
     for i in range(9):
         if grid[row][i] == num:
             return False
