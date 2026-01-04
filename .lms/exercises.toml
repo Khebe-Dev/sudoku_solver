@@ -1,4 +1,0 @@
-_version = 0.1
-
-[sudoku_solver]
-activity_id = "fun-ex-sudoku-solver"
